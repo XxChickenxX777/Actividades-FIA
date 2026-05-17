@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de la Problemática</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Análisis Estadístico de la Problemática</h1>
+        <p>Presentación de datos, medidas de tendencia central y distribución de frecuencias</p>
+    </header>
+
+    <div class="container">
+        
+        <h2 class="section-title">Información General</h2>
+        <p>Esta página es el análisis de una muestra de 29 registros. Se evaluaron tres variables continuas (Peso, Altura, Velocidad) y una variable categórica (Color). Los datos faltantes fueron omitidos para los cálculos matemáticos.</p>
+
+        <h2 class="section-title">Cálculos: Medidas de Tendencia Central</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Peso</h3>
+                <p class="stat-value"><strong>Media:</strong> 9.78</p>
+                <p class="stat-value"><strong>Mediana:</strong> 10.30</p>
+                <p class="stat-value"><strong>Moda:</strong> 11.00</p>
+            </div>
+            <div class="stat-card">
+                <h3>Altura</h3>
+                <p class="stat-value"><strong>Media:</strong> 69.31</p>
+                <p class="stat-value"><strong>Mediana:</strong> 71.00</p>
+                <p class="stat-value"><strong>Moda:</strong> 70.00</p>
+            </div>
+            <div class="stat-card">
+                <h3>Velocidad</h3>
+                <p class="stat-value"><strong>Media:</strong> 25.87</p>
+                <p class="stat-value"><strong>Mediana:</strong> 22.40</p>
+                <p class="stat-value"><strong>Moda:</strong> 10.30</p>
+            </div>
+            <div class="stat-card" style="border-top-color: #2ecc71;">
+                <h3>Color</h3>
+                <p class="stat-value"><strong>Moda principal:</strong> Verde</p>
+                <p class="stat-value" style="font-size: 0.9rem;">(La media y mediana no aplican a datos cualitativos)</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Gráficos de Distribución</h2>
+        
+        <div class="charts-grid">
+            <div class="chart-container">
+                <canvas id="graficaPeso"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="pastelPeso"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="graficaColor"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="pastelColor"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const intervalosPeso = ['6.29 - 7.62', '7.62 - 8.94', '8.94 - 10.26', '10.26 - 11.58', '11.58 - 12.90'];
+        const absolutasPeso = [7, 3, 4, 11, 4];
+        const porcentajesPeso = [24.14, 10.34, 13.79, 37.93, 13.79];
+
+        const categoriasColor = ['Verde', 'Amarillo', 'Blanco'];
+        const absolutasColor = [12, 9, 7];
+        const porcentajesColor = [42.86, 32.14, 25.00];
+
+        new Chart(document.getElementById('graficaPeso'), {
+            type: 'bar',
+            data: {
+                labels: intervalosPeso,
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Polígono de Frecuencias',
+                        data: absolutasPeso,
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        marker: 'circle'
+                    },
+                    {
+                        type: 'bar',
+                        label: 'Frecuencia Absoluta (Peso)',
+                        data: absolutasPeso,
+                        backgroundColor: '#3498db'
+                    }
+                ]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Distribución de Peso' } } }
+        });
+
+        new Chart(document.getElementById('pastelPeso'), {
+            type: 'pie',
+            data: {
+                labels: intervalosPeso,
+                datasets: [{
+                    data: porcentajesPeso,
+                    backgroundColor: ['#ff9ff3', '#feca57', '#ff6b6b', '#48dbfb', '#1dd1a1']
+                }]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Frecuencia Relativa (%) - Peso' } } }
+        });
+
+        new Chart(document.getElementById('graficaColor'), {
+            type: 'bar',
+            data: {
+                labels: categoriasColor,
+                datasets: [{
+                    label: 'Frecuencia Absoluta (Color)',
+                    data: absolutasColor,
+                    backgroundColor: ['#2ecc71', '#f1c40f', '#bdc3c7'],
+                    borderColor: '#7f8c8d',
+                    borderWidth: 1
+                }]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Frecuencia por Color' } } }
+        });
+
+        new Chart(document.getElementById('pastelColor'), {
+            type: 'doughnut', 
+            data: {
+                labels: categoriasColor,
+                datasets: [{
+                    data: porcentajesColor,
+                    backgroundColor: ['#2ecc71', '#f1c40f', '#bdc3c7']
+                }]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Frecuencia Relativa (%) - Color' } } }
+        });
+    </script>
+</body>
+</html>
